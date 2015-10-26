@@ -6,6 +6,7 @@ import java.util.List;
 
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
+import sun.security.provider.certpath.AdjacencyList;
 
 public class AdjacencyMatrixGraph implements Graph {
 
@@ -22,6 +23,18 @@ public class AdjacencyMatrixGraph implements Graph {
     public void addVertex(Vertex v) {
 
         vertexList.add(v);
+        ArrayList<Integer> tempList = new ArrayList<Integer>();
+        
+        for (int i = 0; i < vertexList.size(); i++){
+            tempList.add(0);
+        }
+        if (vertexList.size() > 1){
+        for (int j = 0; j < vertexList.size() - 1; j++){
+            adjacencyMatrix.get(j).add(0);
+        }
+        }
+
+        adjacencyMatrix.add(tempList);
 
     }
 
@@ -39,8 +52,8 @@ public class AdjacencyMatrixGraph implements Graph {
 
         x = vertexList.indexOf(v1);
         y = vertexList.indexOf(v2);
-
-        adjacencyMatrix.get(x).add(y, 1);
+        
+        adjacencyMatrix.get(x).set(y, 1);
 
     }
 
@@ -74,7 +87,10 @@ public class AdjacencyMatrixGraph implements Graph {
         x = vertexList.indexOf(v);
 
         List<Vertex> dwnsNeighbours = new LinkedList<Vertex>();
-
+        
+        if (adjacencyMatrix.isEmpty())
+            return dwnsNeighbours;
+        
         for (int i = 0; i < vertexList.size(); i++) {
 
             if (adjacencyMatrix.get(x).get(i) == 1) {
@@ -97,6 +113,9 @@ public class AdjacencyMatrixGraph implements Graph {
         y = vertexList.indexOf(v);
 
         List<Vertex> upstNeighbours = new LinkedList<Vertex>();
+        
+        if (adjacencyMatrix.isEmpty())
+            return upstNeighbours;
 
         for (int i = 0; i < vertexList.size(); i++) {
 
