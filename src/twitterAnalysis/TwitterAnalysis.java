@@ -1,7 +1,16 @@
 package twitterAnalysis;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
 import ca.ubc.ece.cpen221.mp3.graph.Algorithms;
@@ -9,7 +18,7 @@ import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class TwitterAnalysis {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Graph twitterGraph = new AdjacencyListGraph();
         twitterGraph = createGraph();
         
@@ -35,16 +44,16 @@ public class TwitterAnalysis {
 
             while ((line = twitterReader.readLine()) != null) {
                 String[] columns = line.split(" ");
-                String answer = "";
+                List<String> answer = new ArrayList<String>();
                 String queryType = columns[0];
                 String userID1 = columns[1];
                 String userID2 = columns[2];
                 if (columns[1].equals("commonInfluencers")) {
                     answer = commonInfluencers(userID1, userID2, twitterGraph);
                 } else if (columns[0].equals("numRetweets")) {
-                    answer = numRetweets(userID1, userID2, twitterGraph);
+                    answer.add(numRetweets(userID1, userID2, twitterGraph));
                 } else {
-                    answer = "ERROR";
+                    answer.add("ERROR");
                 }
 
                 output = new BufferedWriter(
@@ -64,13 +73,13 @@ public class TwitterAnalysis {
         }
     }
 
-    public List<String> commonInfluencers(String userID1, String userID2, Graph graph) {
+    public static List<String> commonInfluencers(String userID1, String userID2, Graph graph) {
         List<String> commonInfluencers = new ArrayList<String>();
         List<Vertex> vertexList = new ArrayList<Vertex>();
  
         // call common upstream neighbours, and put all their user IDs in a list of strings
         
-        vertexList = Algorithms.commonUps(graph,  new Vertex(userID1), new Vertex(userID2));
+        vertexList = Algorithms.commonUps(graph, new Vertex(userID1), new Vertex(userID2));
                         
         for(int j = 0; j < vertexList.size(); j++){
             commonInfluencers.add(vertexList.get(j).toString());
@@ -78,7 +87,7 @@ public class TwitterAnalysis {
         return commonInfluencers;
     }
 
-    public String numRetweets(String userID1, String userID2, Graph graph) {
+    public static String numRetweets(String userID1, String userID2, Graph graph) {
         Integer shortestPath = 0;
 
         shortestPath = Algorithms.shortestDistance(graph, new Vertex(userID1),new Vertex(userID2));
