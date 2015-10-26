@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -17,7 +18,7 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
  * @author John
  *
  */
-public class AdjacencyListGraphTest {
+public class AdjacencyMatrixGraphTest {
 
     /**
      * Test method for
@@ -26,7 +27,7 @@ public class AdjacencyListGraphTest {
      */
     @Test
     public void testVertices() {
-        AdjacencyListGraph TestGraph = new AdjacencyListGraph();
+        AdjacencyMatrixGraph TestGraph = new AdjacencyMatrixGraph();
         List<Vertex> TestList = new LinkedList<Vertex>();
 
         assertEquals("The lists should be the same: both empty.", TestList,
@@ -66,7 +67,7 @@ public class AdjacencyListGraphTest {
      */
     @Test
     public void testEdges() {
-        AdjacencyListGraph TestGraph = new AdjacencyListGraph();
+        AdjacencyMatrixGraph TestGraph = new AdjacencyMatrixGraph();
         List<Vertex> TestList1 = new LinkedList<Vertex>();
         List<Vertex> TestList2 = new LinkedList<Vertex>();
         List<Vertex> EmptyList = new LinkedList<Vertex>();
@@ -123,7 +124,7 @@ public class AdjacencyListGraphTest {
 
     @Test
     public void testGraph() {
-        AdjacencyListGraph TestGraph = new AdjacencyListGraph();
+        AdjacencyMatrixGraph TestGraph = new AdjacencyMatrixGraph();
         List<Vertex> TestList = new ArrayList<Vertex>();
         List<Vertex> CheckList = new ArrayList<Vertex>();
 

@@ -6,7 +6,7 @@ import java.util.List;
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
-public class AdjacencyListGraph implements Graph {
+public class AdjacencyListGraph1 implements Graph {
 
     private ArrayList<ArrayList<Vertex>> listOfLists;
 
@@ -28,7 +28,7 @@ public class AdjacencyListGraph implements Graph {
         return index;
     }
 
-    public AdjacencyListGraph() {
+    public AdjacencyListGraph1() {
         listOfLists = new ArrayList<ArrayList<Vertex>>();
     }
 
@@ -74,13 +74,9 @@ public class AdjacencyListGraph implements Graph {
     public List<Vertex> getUpstreamNeighbors(Vertex v) {
         List<Vertex> upstreamNeighbours = new ArrayList<Vertex>();
         int size = listOfLists.size();
-        Vertex head = new Vertex("");
         for(int i = 0; i<size; i++){
-            List<Vertex> sublist = new ArrayList<Vertex>();
-            sublist = generateSublist(listOfLists.get(i));
-            if( sublist.contains(v)){
-                head = listOfLists.get(i).get(0);
-                upstreamNeighbours.add(head);
+            if( generateSublist(listOfLists.get(i)).contains(v)){
+                upstreamNeighbours.add(listOfLists.get(i).get(0));
             }
         }
         return upstreamNeighbours;

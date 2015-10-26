@@ -43,12 +43,12 @@ public class AdjacencyListObject {
     }
 
     /**
-     * Adds an edge between the vertex on which the function is called and the passed vertex, v
+     * Adds an edge to the passed vertex v to the AdjacencyListObject on which the function is called
      * 
      * @param v The vertex at the end of the newly-constructed edge
      * @return false if the vertexes were already connected, true otherwise.
      */
-    public boolean addEdge(Vertex v) {
+    public boolean newEdge(Vertex v) {
         if (this.isConnected(v)) {
             return false;
         } else {
