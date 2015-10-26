@@ -8,68 +8,80 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class AdjacencyListGraph implements Graph {
     // TODO: Implement this class
-    private List<AdjacencyListObject> AdjacencyList;
+    private List<AdjacencyListObject> AdjacencyObjectList;
 
     public AdjacencyListGraph() {
-        AdjacencyList = new LinkedList<AdjacencyListObject>();
+        AdjacencyObjectList = new LinkedList<AdjacencyListObject>();
     }
 
+    private AdjacencyListObject returnAdjacencyListObject(Vertex v)
+    { 
+        int size = AdjacencyObjectList.size();
+        AdjacencyListObject requestedObject = new AdjacencyListObject("");
+        for(int i  = 0; i<size; i++){
+            if(AdjacencyObjectList.get(i).getVertex().equals(v)){
+                requestedObject = AdjacencyObjectList.get(i);
+            }
+        }
+        return requestedObject;
+    }
+    
     @Override
     public void addVertex(Vertex v) {
         // TODO Auto-generated method stub
         AdjacencyListObject newVertex = new AdjacencyListObject(v.getLabel());
-        AdjacencyList.add(newVertex);
+        AdjacencyObjectList.add(newVertex);
     }
 
     @Override
     public void addEdge(Vertex v1, Vertex v2) {
         // TODO Auto-generated method stub
-        if (AdjacencyList.contains(v1) && AdjacencyList.contains(v2)) {
-            AdjacencyList.get(AdjacencyList.indexOf(v1)).addEdge(v2);
-            AdjacencyList.get(AdjacencyList.indexOf(v2)).addEdge(v1);
+        if (this.getVertices().contains(v1)
+                && this.getVertices().contains(v2)) {
+            this.returnAdjacencyListObject(v1).addEdge(v2);
         }
-        // nothing should happen if the specified vertices aren't in the graph
-        // I don't think I can throw an exception, although I'd like to.
     }
 
     @Override
     public boolean edgeExists(Vertex v1, Vertex v2) {
         // TODO Auto-generated method stub
-        if (AdjacencyList.contains(v1) && AdjacencyList.contains(v2)) {
-            if (AdjacencyList.get(AdjacencyList.indexOf(v1)).isConnected(v2)
-                    || AdjacencyList.get(AdjacencyList.indexOf(v2))
-                            .isConnected(v1)) {
-                return true;
-            } else {
-                return false;
+        boolean edgeExists = false;
+        if (getVertices().contains(v1) && getVertices().contains(v2)) {
+            int size = AdjacencyObjectList.size();
+            for (int i = 0; i < size; i++) {
+                boolean rightObject = (AdjacencyObjectList.get(i).getVertex().equals(v1));
+                boolean isAdjacent = AdjacencyObjectList.get(i).getAdjacentVertices().contains(v2);
+                if (rightObject && isAdjacent) {
+                    edgeExists = true;
+                }
             }
-        } else {
-            return false;
-        }
+        } 
+        return edgeExists;
     }
 
     @Override
     public List<Vertex> getDownstreamNeighbors(Vertex v) {
         // TODO Auto-generated method stub
-        if (AdjacencyList.contains(v)) {
-            return AdjacencyList.get(AdjacencyList.indexOf(v))
-                    .returnAdjacentVertices();
-        } else {
-            // in the case that the vertex doesn't exist, and given that we
-            // can't throw exceptions (???) I return an uninitialized list.
-            List<Vertex> downstreamNeighbours = new LinkedList<Vertex>();
-            return downstreamNeighbours;
+        List<Vertex> downstreamNeighbours = new LinkedList<Vertex>();
+        int size = AdjacencyObjectList.size();
+        for (int i = 0; i < size; i++) {
+            boolean rightObject = (AdjacencyObjectList.get(i).getVertex().equals(v));
+            if (rightObject){
+                downstreamNeighbours = AdjacencyObjectList.get(i).getAdjacentVertices();
+            }       
         }
+        return downstreamNeighbours;
     }
 
     @Override
     public List<Vertex> getUpstreamNeighbors(Vertex v) {
         // TODO Auto-generated method stub
         List<Vertex> upstreamNeighbours = new LinkedList<Vertex>();
-        int size = AdjacencyList.size();
+        int size = AdjacencyObjectList.size();
         for (int i = 0; i < size; i++) {
-            if (AdjacencyList.get(i).isConnected(v)) {
-                upstreamNeighbours.add(AdjacencyList.get(i).returnVertex());
+            if (AdjacencyObjectList.get(i).isConnected(v)) {
+                upstreamNeighbours
+                        .add(AdjacencyObjectList.get(i).getVertex());
             }
         }
         return upstreamNeighbours;
@@ -79,9 +91,9 @@ public class AdjacencyListGraph implements Graph {
     public List<Vertex> getVertices() {
         // TODO Auto-generated method stub
         List<Vertex> Vertices = new LinkedList<Vertex>();
-        int size = AdjacencyList.size();
+        int size = AdjacencyObjectList.size();
         for (int i = 0; i < size; i++) {
-            Vertices.add(AdjacencyList.get(i).returnVertex());
+            Vertices.add(AdjacencyObjectList.get(i).getVertex());
         }
         return Vertices;
     }

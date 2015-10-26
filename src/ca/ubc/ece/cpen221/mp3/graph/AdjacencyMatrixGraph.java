@@ -11,21 +11,20 @@ public class AdjacencyMatrixGraph implements Graph {
 
     private ArrayList<Vertex> vertexList = new ArrayList<Vertex>();
     private ArrayList<ArrayList<Integer>> adjacencyMatrix = new ArrayList<ArrayList<Integer>>();
-    
-    
+
     /**
-     * adds a vertex to the graph 
+     * adds a vertex to the graph
      * 
-     *@param v
+     * @param v
      * 
      */
     @Override
     public void addVertex(Vertex v) {
-        
+
         vertexList.add(v);
-        
 
     }
+
     /**
      * adds an edge between two vertices
      * 
@@ -37,15 +36,14 @@ public class AdjacencyMatrixGraph implements Graph {
     public void addEdge(Vertex v1, Vertex v2) {
         int x;
         int y;
-        
+
         x = vertexList.indexOf(v1);
         y = vertexList.indexOf(v2);
-        
+
         adjacencyMatrix.get(x).add(y, 1);
-        
-        
 
     }
+
     /**
      * 
      * @param v1
@@ -54,15 +52,16 @@ public class AdjacencyMatrixGraph implements Graph {
      */
     @Override
     public boolean edgeExists(Vertex v1, Vertex v2) {
-        
+
         int x;
         int y;
-        
+
         x = vertexList.indexOf(v1);
         y = vertexList.indexOf(v2);
-        
+
         return adjacencyMatrix.get(x).get(y) == 1;
     }
+
     /**
      * 
      * @param v
@@ -70,43 +69,45 @@ public class AdjacencyMatrixGraph implements Graph {
      */
     @Override
     public List<Vertex> getDownstreamNeighbors(Vertex v) {
-        
+
         int x;
         x = vertexList.indexOf(v);
-        
+
         List<Vertex> dwnsNeighbours = new LinkedList<Vertex>();
-        
-        for (int i = 0; i < vertexList.size(); i++){
-            
-            if (adjacencyMatrix.get(x).get(i) == 1){
-                
+
+        for (int i = 0; i < vertexList.size(); i++) {
+
+            if (adjacencyMatrix.get(x).get(i) == 1) {
+
                 dwnsNeighbours.add(vertexList.get(i));
-            }            
-        }        
+            }
+        }
         return dwnsNeighbours;
     }
+
     /**
      * 
      * @param v
-     * @return a list of neighbour vertices that point toward this vertex
+     * @return a list of neighbor vertices that point toward this vertex
      */
     @Override
     public List<Vertex> getUpstreamNeighbors(Vertex v) {
-        
+
         int y;
         y = vertexList.indexOf(v);
-        
+
         List<Vertex> upstNeighbours = new LinkedList<Vertex>();
-        
-        for (int i = 0; i < vertexList.size(); i++){         
- 
-            if (adjacencyMatrix.get(i).get(y) == 1){
-                
+
+        for (int i = 0; i < vertexList.size(); i++) {
+
+            if (adjacencyMatrix.get(i).get(y) == 1) {
+
                 upstNeighbours.add(vertexList.get(i));
-            }            
-        }        
-        return upstNeighbours;   
+            }
+        }
+        return upstNeighbours;
     }
+
     /**
      * 
      * @return the list of all vertices in the graph
@@ -114,11 +115,11 @@ public class AdjacencyMatrixGraph implements Graph {
     @Override
     public List<Vertex> getVertices() {
         List<Vertex> listofVertices = new LinkedList<Vertex>();
-        
-        for (int i = 0; i < vertexList.size(); i++){
+
+        for (int i = 0; i < vertexList.size(); i++) {
             listofVertices.add(vertexList.get(i));
         }
-                
+
         return listofVertices;
     }
 
