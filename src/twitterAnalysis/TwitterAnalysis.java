@@ -39,9 +39,9 @@ public class TwitterAnalysis {
                 String userID1 = columns[1];
                 String userID2 = columns[2];
                 if (columns[1].equals("commonInfluencers")) {
-                    answer = commonInfluencers(userID1, userID2);
+                    answer = commonInfluencers(userID1, userID2, twitterGraph);
                 } else if (columns[0].equals("numRetweets")) {
-                    answer = numRetweets(userID1, userID2);
+                    answer = numRetweets(userID1, userID2, twitterGraph);
                 } else {
                     answer = "ERROR";
                 }
@@ -63,14 +63,21 @@ public class TwitterAnalysis {
         }
     }
 
-    public String commonInfluencers(String userID1, String userID2) {
-        // call common upstream neighbours
-        return null;
+    public List<String> commonInfluencers(String userID1, String userID2, Graph graph) {
+        List<String> commonInfluencers = new ArrayList<String>();
+        // TODO: implement this function
+        // returns a list of all of the common influencers.  
+        // call common upstream neighbours, and put all their user IDs in a list of strings
+        
+        return commonInfluencers;
     }
 
-    public String numRetweets(String userID1, String userID2) {
-        // call shortest path
-        return null;
+    public String numRetweets(String userID1, String userID2, Graph graph) {
+        Integer shortestPath = 0;
+        // TODO: implement this function
+        // returns a string with the length of the shortest path
+        String s = Integer.toString(shortestPath);
+        return s;
     }
 
     public static Graph createGraph() {
