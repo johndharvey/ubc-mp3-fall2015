@@ -140,11 +140,17 @@ public class AdjacencyListGraphTest {
         TestGraph.addVertex(v5);
 
         TestGraph.addEdge(v1, v4);
+        assertEquals("There should be an edge from 1 to 4.", true, TestGraph.edgeExists(v1, v4));
         TestGraph.addEdge(v2, v1);
+        assertEquals("There should be an edge from 2 to 1.", true, TestGraph.edgeExists(v2, v1));
         TestGraph.addEdge(v2, v4);
+        assertEquals("There should be an edge from 2 to 4.", true, TestGraph.edgeExists(v2, v4));
         TestGraph.addEdge(v4, v1);
+        assertEquals("There should be an edge from 4 to 1.", true, TestGraph.edgeExists(v4, v1));
         TestGraph.addEdge(v4, v4);
+        assertEquals("There should be an edge from 4 to 4.", true, TestGraph.edgeExists(v4, v4));
         TestGraph.addEdge(v4, v5);
+        assertEquals("There should be an edge from 4 to 5.", true, TestGraph.edgeExists(v4, v5));
 
         CheckList.clear();
         CheckList.add(v2);
@@ -172,7 +178,7 @@ public class AdjacencyListGraphTest {
         CheckList.add(v1);
         CheckList.add(v4);
         assertEquals("The downstream neighbours of v2 are v1, v4", CheckList,
-                TestList); // John fails
+                TestList); 
         TestList.clear();
 
         CheckList.clear();
@@ -192,8 +198,7 @@ public class AdjacencyListGraphTest {
         CheckList.add(v1);
         CheckList.add(v2);
         CheckList.add(v4);
-        assertEquals("The upstream neighbours of v4 are v1, v2, v4", CheckList,
-               TestList);
+        assertEquals("The upstream neighbours of v4 are v1, v2, v4", CheckList, TestList);
         TestList.clear();
 
         CheckList.clear();
