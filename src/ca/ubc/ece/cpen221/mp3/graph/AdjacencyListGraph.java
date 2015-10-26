@@ -10,10 +10,12 @@ public class AdjacencyListGraph implements Graph {
 
     private ArrayList<ArrayList<Vertex>> listOfLists;
 
-    private List<Vertex> generateSublist(ArrayList<Vertex> l) {
+    private List<Vertex> generateSublist(List<Vertex> l) {
         List<Vertex> sublist = new ArrayList<Vertex>();
-        int size = l.size();
-        sublist = l.subList(1, size);
+        int size = l.size();        
+        for(int i = 1; i<size; i++){
+            sublist.add(l.get(i));
+        }
         return sublist;
     }
 
@@ -75,12 +77,13 @@ public class AdjacencyListGraph implements Graph {
         List<Vertex> upstreamNeighbours = new ArrayList<Vertex>();
         int size = listOfLists.size();
         Vertex head = new Vertex("");
-        for(int i = 0; i<size; i++){
+        for (int i = 0; i < size; i++) {
             List<Vertex> sublist = new ArrayList<Vertex>();
             sublist = generateSublist(listOfLists.get(i));
-            if( sublist.contains(v)){
+            if (sublist.contains(v)) {
                 head = listOfLists.get(i).get(0);
                 upstreamNeighbours.add(head);
+                System.out.println("In this case, element " + (i + 1) + " is an upstream neighbour");
             }
         }
         return upstreamNeighbours;
@@ -90,7 +93,7 @@ public class AdjacencyListGraph implements Graph {
     public List<Vertex> getVertices() {
         List<Vertex> vertices = new ArrayList<Vertex>();
         int size = listOfLists.size();
-        for(int i = 0; i<size; i++){
+        for (int i = 0; i < size; i++) {
             vertices.add(listOfLists.get(i).get(0));
         }
         return vertices;
