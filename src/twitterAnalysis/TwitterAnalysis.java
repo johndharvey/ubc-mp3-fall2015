@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
+import ca.ubc.ece.cpen221.mp3.graph.Algorithms;
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
@@ -69,8 +70,8 @@ public class TwitterAnalysis {
  
         // call common upstream neighbours, and put all their user IDs in a list of strings
         
-        vertexList = commonUps(graph, new Vertex(userID1), new Vertex(userID2));
-        
+        vertexList = Algorithms.commonUps(graph,  new Vertex(userID1), new Vertex(userID2));
+                        
         for(int j = 0; j < vertexList.size(); j++){
             commonInfluencers.add(vertexList.get(j).toString());
         }
@@ -80,7 +81,7 @@ public class TwitterAnalysis {
     public String numRetweets(String userID1, String userID2, Graph graph) {
         Integer shortestPath = 0;
 
-        shortestPath = shortestDistance(graph, new Vertex(userID1), new Vertex(userID2));
+        shortestPath = Algorithms.shortestDistance(graph, new Vertex(userID1),new Vertex(userID2));
         String s = Integer.toString(shortestPath);
         return s;
     }
