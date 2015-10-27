@@ -131,7 +131,7 @@ public class Algorithms {
 	                tempList.addAll(adjacencyGraph.getDownstreamNeighbors(vertexList.get(i)));   //creates a temporary list that is made up of 
 	            }                                                                                //the vertices' downstream vertices      
 	            
-	            vertexList = tempList;  //sends that list to vertexlist
+	            vertexList.addAll(tempList);  //sends that list to vertexlist
 	            tempList.clear();     //clears templist to prepare it for later usage
 	            
 	            if (!vertexList.isEmpty())  //as long as there were downstream neighbours counter++

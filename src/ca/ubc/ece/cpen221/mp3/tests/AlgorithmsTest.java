@@ -155,7 +155,9 @@ public class AlgorithmsTest {
         amg.addEdge(testv2, testv5);
         amg.addEdge(testv5, testv6);
         
-        assertEquals("Should equal 4.", Algorithms.shortestDistance(amg, testv1, testv6), 4);
+        int j = 3;
+        
+        assertEquals("Should equal 4.", Algorithms.shortestDistance(amg, testv1, testv6), j);
     }
 
     @Test
@@ -213,6 +215,11 @@ public class AlgorithmsTest {
 
         
         assertTrue("If this is empty, it's working!", Algorithms.commonDowns(amg, testv5, testv4).isEmpty());
+    }
+    
+    public static void main(String[] args) {
+        AlgorithmsTest at= new AlgorithmsTest();
+        at.testCommonDowns();
     }
 
 }
