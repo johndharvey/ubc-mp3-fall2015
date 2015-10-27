@@ -1,14 +1,7 @@
 package twitterAnalysis;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Writer;
+import java.io.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +12,9 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class TwitterAnalysis {
     public static void main(String[] args) throws IOException {
+        File file = new File(".");
+        for(String fileNames : file.list()) System.out.println(fileNames);
+        
         Graph twitterGraph = new AdjacencyListGraph();
         twitterGraph = createGraph();
         
@@ -99,7 +95,7 @@ public class TwitterAnalysis {
         FileInputStream data;
         AdjacencyListGraph twitter = new AdjacencyListGraph();
         try {
-            data = new FileInputStream("twitter.txt");
+            data = new FileInputStream("datasets/twitter.txt");
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -109,7 +105,7 @@ public class TwitterAnalysis {
                     new InputStreamReader(data));
 
             String line;
-
+            int i = 0;
             while ((line = twitterReader.readLine()) != null) {
                 String[] columns = line.split(" ");
                 String userID1 = columns[0];
@@ -124,6 +120,10 @@ public class TwitterAnalysis {
                 }
                 if (!twitter.edgeExists(v1, v2)) {
                     twitter.addEdge(v1, v2);
+                }
+                i++;
+                if(i%10000==0){
+                    System.out.println(i);
                 }
             }
             twitterReader.close();

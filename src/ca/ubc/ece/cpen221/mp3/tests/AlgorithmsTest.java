@@ -64,11 +64,11 @@ public class AlgorithmsTest {
         Set<List<Vertex>> BFSset = Algorithms.BFS(amg);  
         
         assertTrue("checking first list of vertices.", BFSset.containsAll(checklist1));
-        assertTrue("checking first list of vertices.", BFSset.containsAll(checklist2));
-        assertTrue("checking first list of vertices.", BFSset.containsAll(checklist3));
-        assertTrue("checking first list of vertices.", BFSset.containsAll(checklist4));
-        assertTrue("checking first list of vertices.", BFSset.containsAll(checklist5));
-        assertTrue("checking first list of vertices.", BFSset.containsAll(checklist6));
+        assertTrue("checking second list of vertices.", BFSset.containsAll(checklist2));
+        assertTrue("checking third list of vertices.", BFSset.containsAll(checklist3));
+        assertTrue("checking fourth list of vertices.", BFSset.containsAll(checklist4));
+        assertTrue("checking fifth list of vertices.", BFSset.containsAll(checklist5));
+        assertTrue("checking sixth list of vertices.", BFSset.containsAll(checklist6));
         
         
     }
