@@ -4,14 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
 
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
-import ca.ubc.ece.cpen221.mp3.graph.AdjacencyMatrixGraph;
 import ca.ubc.ece.cpen221.mp3.graph.Algorithms;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
@@ -129,10 +127,6 @@ public class AlgorithmsTest {
         assertTrue("checking first list of vertices.", DFSset.containsAll(checklist4));
         assertTrue("checking first list of vertices.", DFSset.containsAll(checklist5));
         assertTrue("checking first list of vertices.", DFSset.containsAll(checklist6));
-
-
-        
-
     }
 
     @Test
@@ -218,8 +212,6 @@ public class AlgorithmsTest {
         amg.addEdge(testv2, testv4);
         amg.addEdge(testv2, testv5);
         amg.addEdge(testv5, testv6);
-        
-
         
         assertTrue("If this is empty, it's working!", Algorithms.commonDowns(amg, testv5, testv4).isEmpty());
     }
