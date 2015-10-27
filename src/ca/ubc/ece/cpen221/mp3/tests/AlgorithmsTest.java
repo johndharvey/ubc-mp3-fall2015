@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyMatrixGraph;
 import ca.ubc.ece.cpen221.mp3.graph.Algorithms;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
@@ -25,7 +26,8 @@ public class AlgorithmsTest {
         Vertex testv5 = new Vertex("E");
         Vertex testv6 = new Vertex("F");
         
-        AdjacencyMatrixGraph amg = new AdjacencyMatrixGraph(); 
+        AdjacencyListGraph amg = new AdjacencyListGraph(); 
+        // AdjacencyMatrixGraph amg = new AdjacencyMatrixGraph(); 
         amg.addVertex(testv1);
         amg.addVertex(testv2);
         amg.addVertex(testv3);
@@ -82,7 +84,8 @@ public class AlgorithmsTest {
         Vertex testv5 = new Vertex("E");
         Vertex testv6 = new Vertex("F");
         
-        AdjacencyMatrixGraph amg = new AdjacencyMatrixGraph(); 
+        AdjacencyListGraph amg = new AdjacencyListGraph();
+        // AdjacencyMatrixGraph amg = new AdjacencyMatrixGraph(); 
         amg.addVertex(testv1);
         amg.addVertex(testv2);
         amg.addVertex(testv3);
@@ -141,7 +144,9 @@ public class AlgorithmsTest {
         Vertex testv5 = new Vertex("E");
         Vertex testv6 = new Vertex("F");
         
-        AdjacencyMatrixGraph amg = new AdjacencyMatrixGraph(); 
+        AdjacencyListGraph amg = new AdjacencyListGraph();
+        // AdjacencyMatrixGraph amg = new AdjacencyMatrixGraph();
+        
         amg.addVertex(testv1);
         amg.addVertex(testv2);
         amg.addVertex(testv3);
@@ -167,7 +172,9 @@ public class AlgorithmsTest {
         Vertex testv5 = new Vertex("E");
         Vertex testv6 = new Vertex("F");
         
-        AdjacencyMatrixGraph amg = new AdjacencyMatrixGraph(); 
+        AdjacencyListGraph amg = new AdjacencyListGraph();
+        //AdjacencyMatrixGraph amg = new AdjacencyMatrixGraph();
+        
         amg.addVertex(testv1);
         amg.addVertex(testv2);
         amg.addVertex(testv3);
@@ -196,7 +203,9 @@ public class AlgorithmsTest {
         Vertex testv5 = new Vertex("E");
         Vertex testv6 = new Vertex("F");
         
-        AdjacencyMatrixGraph amg = new AdjacencyMatrixGraph(); 
+        AdjacencyListGraph amg = new AdjacencyListGraph();
+        // AdjacencyMatrixGraph amg = new AdjacencyMatrixGraph(); 
+        
         amg.addVertex(testv1);
         amg.addVertex(testv2);
         amg.addVertex(testv3);

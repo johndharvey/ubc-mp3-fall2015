@@ -23,11 +23,10 @@ public class TwitterAnalysis {
 
         Writer output;
         output = new BufferedWriter(new FileWriter("datasets/answers.txt"));
-        output.append("ANSWERS:");
         output.close();
 
         try {
-            queries = new FileInputStream("datasets/queries.txt");
+            queries = new FileInputStream("datasets/queriesTest.txt");
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -56,18 +55,18 @@ public class TwitterAnalysis {
                         new FileWriter("datasets/answers.txt", true));
 
                 output.write(
-                        "query " + queryType + " " + userID1 + " " + userID2);
+                        "query " + queryType + " " + userID1 + " " + userID2 + "\n");
                         System.out.println("query " + queryType + " " + userID1 + " " + userID2);
-                output.write("<result>");
+                output.write("<result>\n");
                 System.out.println("<result>");
                 int i = 0;
                 while (answer.isEmpty() == false) {
-                    output.write(answer.get(i));
+                    output.write(answer.get(i) +"\n");
                     System.out.println(answer.get(i));
                     answer.remove(i);
                 }
                 output.write("</result>");
-                System.out.println("</result>");
+                System.out.println("</result>\n");
                 output.close();
             }
             twitterReader.close();
@@ -87,7 +86,7 @@ public class TwitterAnalysis {
 
         vertexList = Algorithms.commonUps(graph, new Vertex(userID1),
                 new Vertex(userID2));
-
+        
         for (int j = 0; j < vertexList.size(); j++) {
             commonInfluencers.add(vertexList.get(j).toString());
         }
@@ -111,7 +110,7 @@ public class TwitterAnalysis {
         FileInputStream data;
         AdjacencyListGraph twitter = new AdjacencyListGraph();
         try {
-            data = new FileInputStream("datasets/twitter.txt");
+            data = new FileInputStream("datasets/twitterTest.txt");
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

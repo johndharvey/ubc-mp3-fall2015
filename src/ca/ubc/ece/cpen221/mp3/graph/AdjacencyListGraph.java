@@ -49,7 +49,7 @@ public class AdjacencyListGraph implements Graph {
     public void addVertex(Vertex v) {
         HashSet<Vertex> map = new HashSet<Vertex>();
         map = adjMap.get(v);
-        if (map != null){
+        if (map == null){
             adjMap.put(v, null);
         }
         
@@ -68,7 +68,11 @@ public class AdjacencyListGraph implements Graph {
     public void addEdge(Vertex v1, Vertex v2) {
         HashSet<Vertex> map = new HashSet<Vertex>();
         map = adjMap.get(v1);
-        if (map!=null && !map.contains(v2)){
+        if (map==null){
+            HashSet<Vertex> newMap = new HashSet<Vertex>();
+            newMap.add(v2);
+            adjMap.put(v1, newMap);
+        } else if (!map.contains(v2)){
             adjMap.get(v1).add(v2);
         }
         
@@ -86,7 +90,12 @@ public class AdjacencyListGraph implements Graph {
 
     @Override
     public boolean edgeExists(Vertex v1, Vertex v2) {
-        return adjMap.get(v1).contains(v2);
+        HashSet<Vertex> map = new HashSet<Vertex>();
+        map = adjMap.get(v1);
+        if(map != null && map.contains(v2)){
+            return true;
+        }
+        else return false;
         
         /*ArrayListObject o = vertexExists(v1);
         if (o != null && o.getAdjacentVertices().contains(v2)) {
@@ -106,7 +115,12 @@ public class AdjacencyListGraph implements Graph {
 
     @Override
     public List<Vertex> getDownstreamNeighbors(Vertex v) {
-        List<Vertex> downstreamNeighbours = new LinkedList<Vertex>(adjMap.get(v));
+        HashSet<Vertex> downMap = new HashSet<Vertex>();
+        List<Vertex> downstreamNeighbours = new LinkedList<Vertex>();
+        downMap = adjMap.get(v);
+        if(downMap!=null){
+            downstreamNeighbours = new LinkedList<Vertex>(downMap);
+        }
         return downstreamNeighbours;
         
         /*ArrayListObject o = vertexExists(v);
@@ -130,7 +144,7 @@ public class AdjacencyListGraph implements Graph {
         List<Vertex> upstreamNeighbours = new ArrayList<Vertex>();
         
         for (HashMap.Entry<Vertex, HashSet<Vertex>> entry : adjMap.entrySet()) {
-            if(entry.getValue().contains(v)){
+            if(entry.getValue() != null && entry.getValue().contains(v)){
                 upstreamNeighbours.add(entry.getKey());
             }
         }
