@@ -6,8 +6,11 @@ package ca.ubc.ece.cpen221.mp3.tests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -32,6 +35,9 @@ public class AdjacencyListGraphTest {
 
         assertEquals("The lists should be the same: both empty.", TestList,
                 TestGraph.getVertices());
+        
+        Set<Vertex> TestSet = new HashSet<Vertex>();
+        Set<Vertex> CheckSet = new HashSet<Vertex>();
 
         Vertex testVertex1 = new Vertex("v1");
         Vertex testVertex2 = new Vertex("v2");
@@ -50,14 +56,19 @@ public class AdjacencyListGraphTest {
         TestList.add(testVertex3);
         TestList.add(testVertex4);
         TestList.add(testVertex5);
-
+        
+        TestSet.addAll(TestList);
+        CheckSet.addAll(TestGraph.getVertices());
+        
         assertEquals("The lists should be the same: all five vertices.",
-                TestList, TestGraph.getVertices());
+                TestSet, CheckSet);
 
         TestList.remove(testVertex3);
+        TestSet.clear();
+        TestSet.addAll(TestList);
 
-        assertFalse("The lists should not be the same.",
-                TestList.equals(TestGraph.getVertices()));
+        assertFalse("The lists should not be the same: all five vertices.",
+                TestSet.equals(CheckSet));
     }
 
     /**
@@ -127,6 +138,9 @@ public class AdjacencyListGraphTest {
         AdjacencyListGraph TestGraph = new AdjacencyListGraph();
         List<Vertex> TestList = new ArrayList<Vertex>();
         List<Vertex> CheckList = new ArrayList<Vertex>();
+        
+        Set<Vertex> TestSet = new HashSet<Vertex>();
+        Set<Vertex> CheckSet = new HashSet<Vertex>();
 
         Vertex v1 = new Vertex("1");
         Vertex v2 = new Vertex("2");
@@ -153,75 +167,166 @@ public class AdjacencyListGraphTest {
         TestGraph.addEdge(v4, v5);
         assertEquals("There should be an edge from 4 to 5.", true, TestGraph.edgeExists(v4, v5));
 
+        
+        //----------------//
+        
         CheckList.clear();
+        TestList.clear();
+        CheckSet.clear();
+        TestSet.clear();
+        
         CheckList.add(v2);
         CheckList.add(v4);
         TestList = TestGraph.getUpstreamNeighbors(v1);
-        assertEquals("The upstream neighbours of v1 are v2, v4", CheckList,
-                TestList);
-        TestList.clear();
-
+        
+        CheckSet.addAll(CheckList);
+        TestSet.addAll(TestList);
+        
+        assertEquals("The upstream neighbours of v1 are v2, v4", CheckSet,
+                TestSet);
+        
+        //----------------//
+        
         CheckList.clear();
+        TestList.clear();
+        CheckSet.clear();
+        TestSet.clear();
+        
         TestList = TestGraph.getDownstreamNeighbors(v1);
         CheckList.add(v4);
-        assertEquals("The downstream neighbours of v1 are v4", CheckList,
-                TestList);
-        TestList.clear();
-
+        
+        CheckSet.addAll(CheckList);
+        TestSet.addAll(TestList);
+        
+        assertEquals("The downstream neighbours of v1 are v4", CheckSet,
+                TestSet);
+        
+        //----------------//
+        
         CheckList.clear();
+        TestList.clear();
+        CheckSet.clear();
+        TestSet.clear();
+
         TestList = TestGraph.getUpstreamNeighbors(v2);
-        assertEquals("The upstream neighbours of v2 are 0", CheckList,
-                TestList);
-        TestList.clear();
-
+        
+        CheckSet.addAll(CheckList);
+        TestSet.addAll(TestList);
+        
+        assertEquals("The upstream neighbours of v2 are 0", CheckSet,
+                TestSet);
+        
+        //----------------//
+        
         CheckList.clear();
+        TestList.clear();
+        CheckSet.clear();
+        TestSet.clear();
+
         TestList = TestGraph.getDownstreamNeighbors(v2);
         CheckList.add(v1);
         CheckList.add(v4);
-        assertEquals("The downstream neighbours of v2 are v1, v4", CheckList,
-                TestList); 
-        TestList.clear();
-
+        
+        CheckSet.addAll(CheckList);
+        TestSet.addAll(TestList);
+        
+        assertEquals("The downstream neighbours of v2 are v1, v4", CheckSet,
+                TestSet); 
+        
+        //----------------//
+        
         CheckList.clear();
+        TestList.clear();
+        CheckSet.clear();
+        TestSet.clear();
+
         TestList = TestGraph.getUpstreamNeighbors(v3);
-        assertEquals("The upstream neighbours of v3 are 0", CheckList,
-                TestList);
-        TestList.clear();
-
+        
+        CheckSet.addAll(CheckList);
+        TestSet.addAll(TestList);
+        
+        assertEquals("The upstream neighbours of v3 are 0", CheckSet,
+                TestSet);
+        
+        //----------------//
+        
         CheckList.clear();
+        TestList.clear();
+        CheckSet.clear();
+        TestSet.clear();
+
         TestList = TestGraph.getDownstreamNeighbors(v3);
-        assertEquals("The downstream neighbours of v3 are 0", CheckList,
-                TestList);
-        TestList.clear();
-
+        
+        CheckSet.addAll(CheckList);
+        TestSet.addAll(TestList);
+        
+        assertEquals("The downstream neighbours of v3 are 0", CheckSet,
+                TestSet);
+        
+        //----------------//
+        
         CheckList.clear();
+        TestList.clear();
+        CheckSet.clear();
+        TestSet.clear();
+
         TestList = TestGraph.getUpstreamNeighbors(v4);
         CheckList.add(v1);
         CheckList.add(v2);
         CheckList.add(v4);
-        assertEquals("The upstream neighbours of v4 are v1, v2, v4", CheckList, TestList);
-        TestList.clear();
-
+        
+        CheckSet.addAll(CheckList);
+        TestSet.addAll(TestList);
+        
+        assertEquals("The upstream neighbours of v4 are v1, v2, v4", CheckSet, TestSet);
+        
+        //----------------//
+        
         CheckList.clear();
+        TestList.clear();
+        CheckSet.clear();
+        TestSet.clear();
+
         TestList = TestGraph.getDownstreamNeighbors(v4);
         CheckList.add(v1);
         CheckList.add(v4);
         CheckList.add(v5);
+        
+        CheckSet.addAll(CheckList);
+        TestSet.addAll(TestList);
+        
         assertEquals("The downstream neighbours of v4 are v1, v4, v5",
-                CheckList, TestList);
-        TestList.clear();
-
+                CheckSet, TestSet);
+        
+        //----------------//
+        
         CheckList.clear();
+        TestList.clear();
+        CheckSet.clear();
+        TestSet.clear();
+
         TestList = TestGraph.getUpstreamNeighbors(v5);
         CheckList.add(v4);
-        assertEquals("The upstream neighbours of v5 are v4", CheckList,
-                TestList);
-        TestList.clear();
-
+        
+        CheckSet.addAll(CheckList);
+        TestSet.addAll(TestList);
+        
+        assertEquals("The upstream neighbours of v5 are v4", CheckSet,
+                TestSet);
+        
+        //----------------//
+        
         CheckList.clear();
-        TestList = TestGraph.getDownstreamNeighbors(v5);
-        assertEquals("The downstream neighbours of v5 are 0", CheckList,
-                TestList);
         TestList.clear();
+        CheckSet.clear();
+        TestSet.clear();
+
+        TestList = TestGraph.getDownstreamNeighbors(v5);
+        
+        CheckSet.addAll(CheckList);
+        TestSet.addAll(TestList);
+        
+        assertEquals("The downstream neighbours of v5 are 0", CheckSet,
+                TestSet);
     }
 }

@@ -6,7 +6,6 @@ import java.util.List;
 
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
-import sun.security.provider.certpath.AdjacencyList;
 
 public class AdjacencyMatrixGraph implements Graph {
 
