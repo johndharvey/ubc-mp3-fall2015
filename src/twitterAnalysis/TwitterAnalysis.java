@@ -12,22 +12,17 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class TwitterAnalysis {
     public static void main(String[] args) throws IOException {
-        File file = new File(".");
-        for(String fileNames : file.list()) System.out.println(fileNames);
-        
         Graph twitterGraph = new AdjacencyListGraph();
         twitterGraph = createGraph();
-        
+
         FileInputStream queries;
-        FileOutputStream answers;
 
         Writer output;
-        output = new BufferedWriter(new FileWriter("answers.txt"));
-        output.append("ANSWERS:");
+        output = new BufferedWriter(new FileWriter(args[1]));
         output.close();
 
         try {
-            queries = new FileInputStream("queries.txt");
+            queries = new FileInputStream(args[0]);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -44,7 +39,7 @@ public class TwitterAnalysis {
                 String queryType = columns[0];
                 String userID1 = columns[1];
                 String userID2 = columns[2];
-                if (columns[1].equals("commonInfluencers")) {
+                if (columns[0].equals("commonInfluencers")) {
                     answer = commonInfluencers(userID1, userID2, twitterGraph);
                 } else if (columns[0].equals("numRetweets")) {
                     answer.add(numRetweets(userID1, userID2, twitterGraph));
@@ -53,13 +48,18 @@ public class TwitterAnalysis {
                 }
 
                 output = new BufferedWriter(
-                        new FileWriter("answers.txt", true));
+                        new FileWriter(args[1], true));
 
                 output.write(
-                        "query " + queryType + " " + userID1 + " " + userID2);
-                output.write("<result>");
-                output.write("    " + answer);
-                output.write("</result>");
+                        "query " + queryType + " " + userID1 + " " + userID2 + "\n");
+                output.write("<result>\n");
+                int i = 0;
+                while (answer.isEmpty() == false) {
+                    output.write(answer.get(i) +"\n");
+                    answer.remove(i);
+                }
+                answer.clear();
+                output.write("</result>\n");
                 output.close();
             }
             twitterReader.close();
@@ -69,24 +69,32 @@ public class TwitterAnalysis {
         }
     }
 
-    public static List<String> commonInfluencers(String userID1, String userID2, Graph graph) {
+    public static List<String> commonInfluencers(String userID1, String userID2,
+            Graph graph) {
         List<String> commonInfluencers = new ArrayList<String>();
         List<Vertex> vertexList = new ArrayList<Vertex>();
- 
-        // call common upstream neighbours, and put all their user IDs in a list of strings
+
+        // call common upstream neighbours, and put all their user IDs in a list
+        // of strings
+
+        vertexList = Algorithms.commonUps(graph, new Vertex(userID1),
+                new Vertex(userID2));
         
-        vertexList = Algorithms.commonUps(graph, new Vertex(userID1), new Vertex(userID2));
-                        
-        for(int j = 0; j < vertexList.size(); j++){
+        for (int j = 0; j < vertexList.size(); j++) {
             commonInfluencers.add(vertexList.get(j).toString());
+        }
+        if(commonInfluencers.size() == 0){
+            commonInfluencers.add("0");
         }
         return commonInfluencers;
     }
 
-    public static String numRetweets(String userID1, String userID2, Graph graph) {
+    public static String numRetweets(String userID1, String userID2,
+            Graph graph) {
         Integer shortestPath = 0;
 
-        shortestPath = Algorithms.shortestDistance(graph, new Vertex(userID1),new Vertex(userID2));
+        shortestPath = Algorithms.shortestDistance(graph, new Vertex(userID1),
+                new Vertex(userID2));
         String s = Integer.toString(shortestPath);
         return s;
     }
@@ -110,20 +118,16 @@ public class TwitterAnalysis {
                 String[] columns = line.split(" ");
                 String userID1 = columns[0];
                 String userID2 = columns[2];
+                
                 Vertex v1 = new Vertex(userID1);
                 Vertex v2 = new Vertex(userID2);
-                if (!twitter.getVertices().contains(v1)) {
-                    twitter.addVertex(v1);
-                }
-                if (!twitter.getVertices().contains(v1)) {
-                    twitter.addVertex(v2);
-                }
-                if (!twitter.edgeExists(v1, v2)) {
-                    twitter.addEdge(v1, v2);
-                }
+                
+                twitter.addVertex(v1);
+                twitter.addVertex(v2);
+                twitter.addEdge(v1, v2);
                 i++;
-                if(i%10000==0){
-                    System.out.println(i);
+                
+                if (i % 10000 == 0) {
                 }
             }
             twitterReader.close();
