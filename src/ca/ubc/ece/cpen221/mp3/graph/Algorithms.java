@@ -23,33 +23,34 @@ public class Algorithms {
         Set<List<Vertex>> vertexSet = new LinkedHashSet<List<Vertex>>();
         List<Vertex> vertexList = new ArrayList<Vertex>();
         Queue<Vertex> vertexQueue = new LinkedList<Vertex>();
-        
-        //we first add the element beginning the search to the queue
-        
-        for (int i = 0; i < adjacencyGraph.getVertices().size(); i++){
+
+        // we first add the element beginning the search to the queue
+
+        for (int i = 0; i < adjacencyGraph.getVertices().size(); i++) {
             vertexQueue.add(adjacencyGraph.getVertices().get(i));
             vertexList.add(vertexQueue.peek());
-            
-            //while the queue has an element in it, it puts new items into vertexlist, then
-            //adds the downstream elements of the top element while removing that element from the
-            //queue
-            while (!vertexQueue.isEmpty()){
+
+            // while the queue has an element in it, it puts new items into
+            // vertexlist, then
+            // adds the downstream elements of the top element while removing
+            // that element from the
+            // queue
+            while (!vertexQueue.isEmpty()) {
                 if (!vertexList.contains(vertexQueue.peek())) {
                     vertexList.add(vertexQueue.peek());
                 }
                 vertexQueue.addAll(adjacencyGraph.getDownstreamNeighbors(vertexQueue.remove()));
-               
+
             }
-            //places the values of vertexlist into the vertex set
+            // places the values of vertexlist into the vertex set
             List<Vertex> tempList3 = new ArrayList<Vertex>();
             tempList3.addAll(vertexList);
             vertexSet.add(tempList3);
-            vertexList.clear();    
+            vertexList.clear();
         }
-        
+
         return vertexSet;
-        
-        
+
     }
 
     /**
@@ -60,38 +61,39 @@ public class Algorithms {
      * @param adjacencyGraph
      * @return Set<List<Vertex>>
      */
-    
+
     public static Set<List<Vertex>> DFS(Graph adjacencyGraph) {
         Set<List<Vertex>> vertexSet = new LinkedHashSet<List<Vertex>>();
         List<Vertex> vertexList = new ArrayList<Vertex>();
         ArrayList<Vertex> vertexQueue = new ArrayList<Vertex>();
-        
-        //we first add the element beginning the search to the queue
-        
-        for (int i = 0; i < adjacencyGraph.getVertices().size(); i++){
+
+        // we first add the element beginning the search to the queue
+
+        for (int i = 0; i < adjacencyGraph.getVertices().size(); i++) {
             vertexQueue.add(adjacencyGraph.getVertices().get(i));
             vertexList.add(vertexQueue.get(0));
-            
-            //while the queue has an element in it, it puts new items into vertexlist, then
-            //adds the downstream elements of the top element while removing that element from the
-            //queue
-            while (!vertexQueue.isEmpty()){
+
+            // while the queue has an element in it, it puts new items into
+            // vertexlist, then
+            // adds the downstream elements of the top element while removing
+            // that element from the
+            // queue
+            while (!vertexQueue.isEmpty()) {
                 if (!vertexList.contains(vertexQueue.get(0))) {
                     vertexList.add(vertexQueue.get(0));
                 }
                 vertexQueue.addAll(0, adjacencyGraph.getDownstreamNeighbors(vertexQueue.remove(0)));
-               
+
             }
-            //places the values of vertexlist into the vertex set
+            // places the values of vertexlist into the vertex set
             List<Vertex> tempList3 = new ArrayList<Vertex>();
             tempList3.addAll(vertexList);
             vertexSet.add(tempList3);
-            vertexList.clear();    
+            vertexList.clear();
         }
-        
+
         return vertexSet;
-        
-        
+
     }
 
     /**
@@ -99,12 +101,13 @@ public class Algorithms {
      * graph.
      * 
      * @param adjacencyGraph
-     * @param vertex - a
-     * @param vertex - b
+     * @param vertex
+     *            - a
+     * @param vertex
+     *            - b
      * @return int - distance
      */
-    public static int shortestDistance(Graph adjacencyGraph, Vertex a, Vertex b)
-            throws IllegalArgumentException {
+    public static int shortestDistance(Graph adjacencyGraph, Vertex a, Vertex b) throws IllegalArgumentException {
 
         List<Vertex> vertexList = new ArrayList<Vertex>();
         List<Vertex> tempList = new ArrayList<Vertex>();
@@ -129,8 +132,7 @@ public class Algorithms {
 
                 // creates a temporary list that is made up of the vertices'
                 // downstream vertices
-                tempList.addAll(adjacencyGraph
-                        .getDownstreamNeighbors(vertexList.get(i)));
+                tempList.addAll(adjacencyGraph.getDownstreamNeighbors(vertexList.get(i)));
             }
 
             // sends that list to vertexlist
@@ -145,8 +147,7 @@ public class Algorithms {
             // if there weren't any downstream neighbours, there isn't a
             // connection between the two vertices
             else if (vertexList.isEmpty() == true)
-                throw new IllegalArgumentException(
-                        "No path exists between these vectors!");
+                throw new IllegalArgumentException("No path exists between these vectors!");
 
         }
 
@@ -158,9 +159,12 @@ public class Algorithms {
      * Returns the list of shared upstream vertices of two vertices.
      * 
      * 
-     * @param G - adjacency graph
-     * @param a - Vertex
-     * @param b - Vertex
+     * @param G
+     *            - adjacency graph
+     * @param a
+     *            - Vertex
+     * @param b
+     *            - Vertex
      * @return List<Vertex>
      */
     public static List<Vertex> commonUps(Graph G, Vertex a, Vertex b) {
@@ -170,7 +174,7 @@ public class Algorithms {
 
         alist.clear();
         blist.clear();
-        
+
         alist = G.getUpstreamNeighbors(a);
         blist = G.getUpstreamNeighbors(b);
 
@@ -181,14 +185,17 @@ public class Algorithms {
 
         return alist;
     }
-        
+
     /**
      * Returns the list of shared downstream vertices of two vertices.
      * 
      * 
-     * @param G - adjacency graph
-     * @param a - Vertex
-     * @param b - Vertex
+     * @param G
+     *            - adjacency graph
+     * @param a
+     *            - Vertex
+     * @param b
+     *            - Vertex
      * @return List<Vertex>
      */
     public static List<Vertex> commonDowns(Graph G, Vertex a, Vertex b) {
