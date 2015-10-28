@@ -63,7 +63,7 @@ public class AdjacencyListGraph implements Graph {
     @Override
     public List<Vertex> getUpstreamNeighbors(Vertex v) {
         List<Vertex> upstreamNeighbours = new ArrayList<Vertex>();
-
+        
         for (HashMap.Entry<Vertex, HashSet<Vertex>> entry : adjMap.entrySet()) {
             if (entry.getValue() != null && entry.getValue().contains(v)) {
                 upstreamNeighbours.add(entry.getKey());

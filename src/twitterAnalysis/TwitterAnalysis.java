@@ -17,8 +17,8 @@ public class TwitterAnalysis {
 
         FileInputStream queries;
 
-        Writer output;
-        output = new BufferedWriter(new FileWriter(args[1]));
+        PrintWriter output;
+        output = new PrintWriter(new FileWriter(args[1]));
         output.close();
 
         try {
@@ -47,19 +47,19 @@ public class TwitterAnalysis {
                     answer.add("ERROR");
                 }
 
-                output = new BufferedWriter(
+                output = new PrintWriter(
                         new FileWriter(args[1], true));
 
-                output.write(
-                        "query " + queryType + " " + userID1 + " " + userID2 + "\n");
-                output.write("<result>\n");
+                output.println(
+                        "query " + queryType + " " + userID1 + " " + userID2);
+                output.println("<result>");
                 int i = 0;
                 while (answer.isEmpty() == false) {
-                    output.write(answer.get(i) +"\n");
+                    output.println(answer.get(i));
                     answer.remove(i);
                 }
                 answer.clear();
-                output.write("</result>\n");
+                output.println("</result>");
                 output.close();
             }
             twitterReader.close();
@@ -79,11 +79,12 @@ public class TwitterAnalysis {
 
         vertexList = Algorithms.commonUps(graph, new Vertex(userID1),
                 new Vertex(userID2));
-        
+        boolean hasCommonInfluencers = false;
         for (int j = 0; j < vertexList.size(); j++) {
+            hasCommonInfluencers = true;
             commonInfluencers.add(vertexList.get(j).toString());
         }
-        if(commonInfluencers.size() == 0){
+        if(!hasCommonInfluencers){
             commonInfluencers.add("0");
         }
         return commonInfluencers;
@@ -113,7 +114,6 @@ public class TwitterAnalysis {
                     new InputStreamReader(data));
 
             String line;
-            int i = 0;
             while ((line = twitterReader.readLine()) != null) {
                 String[] columns = line.split(" ");
                 String userID1 = columns[0];
@@ -125,14 +125,9 @@ public class TwitterAnalysis {
                 twitter.addVertex(v1);
                 twitter.addVertex(v2);
                 twitter.addEdge(v1, v2);
-                i++;
-                
-                if (i % 10000 == 0) {
-                }
             }
             twitterReader.close();
         } catch (Exception e) {
-            // If, for any reason, we had some problems reading data...
             throw new RuntimeException(e);
         }
         return twitter;
