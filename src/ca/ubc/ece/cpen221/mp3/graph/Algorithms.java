@@ -1,7 +1,6 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -96,24 +95,12 @@ public class Algorithms {
     }
 
     /**
-     * Finds an individual vertex's depth-first relationships and returns them
-     * as a list.
-     * 
-     * @param i
-     * @param vertexList
-     * @param adjacencyGraph
-     * @return
-     */
-
-    /**
      * Generates the shortest distance between two vertices on an adjacency
      * graph.
      * 
      * @param adjacencyGraph
-     * @param vertex
-     *            - a
-     * @param vertex
-     *            - b
+     * @param vertex - a
+     * @param vertex - b
      * @return int - distance
      */
     public static int shortestDistance(Graph adjacencyGraph, Vertex a, Vertex b)
@@ -168,15 +155,12 @@ public class Algorithms {
     }
 
     /**
-     * Returns a list of shared upstream vertices of two vertices.
+     * Returns the list of shared upstream vertices of two vertices.
      * 
      * 
-     * @param G
-     *            - adjacency graph
-     * @param a
-     *            Vertex
-     * @param b
-     *            Vertex
+     * @param G - adjacency graph
+     * @param a - Vertex
+     * @param b - Vertex
      * @return List<Vertex>
      */
     public static List<Vertex> commonUps(Graph G, Vertex a, Vertex b) {
@@ -197,34 +181,14 @@ public class Algorithms {
 
         return alist;
     }
-        /*
-        List<Vertex> list = new ArrayList<Vertex>();
-        List<Vertex> list1 = new ArrayList<Vertex>();
-        List<Vertex> list2 = new ArrayList<Vertex>();
-
-        list1 = G.getDownstreamNeighbors(a);
-        list2 = G.getDownstreamNeighbors(b);
         
-        for (Vertex v : list1) {
-            if(list2.contains(v)) {
-                list.add(v);
-            }
-        }
-
-        return list;
-
-    }
-*/
     /**
-     * Returns a list of shared downstream vertices of two vertices.
+     * Returns the list of shared downstream vertices of two vertices.
      * 
      * 
-     * @param G
-     *            - adjacency graph
-     * @param a
-     *            Vertex
-     * @param b
-     *            Vertex
+     * @param G - adjacency graph
+     * @param a - Vertex
+     * @param b - Vertex
      * @return List<Vertex>
      */
     public static List<Vertex> commonDowns(Graph G, Vertex a, Vertex b) {
@@ -240,20 +204,3 @@ public class Algorithms {
         return alist;
     }
 }
-        /*List<Vertex> list = new ArrayList<Vertex>();
-        List<Vertex> list1 = new ArrayList<Vertex>();
-        List<Vertex> list2 = new ArrayList<Vertex>();
-
-        list1 = G.getDownstreamNeighbors(a);
-        list2 = G.getDownstreamNeighbors(b);
-        
-        for (Vertex v : list1) {
-            if(list2.contains(v)) {
-                list.add(v);
-            }
-        }
-
-        return list;
-    }
-}
-*/
