@@ -1,16 +1,17 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Deque;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class Algorithms {
-
-    static boolean[] visited;
 
     /**
      * Uses breadth-first search algorithm on an adjacencyGraph and returns a
@@ -20,41 +21,36 @@ public class Algorithms {
      * @return Set<List<Vertex>>
      */
     public static Set<List<Vertex>> BFS(Graph adjacencyGraph) {
-        Set<List<Vertex>> vertexSet = new HashSet<List<Vertex>>();
+        Set<List<Vertex>> vertexSet = new LinkedHashSet<List<Vertex>>();
         List<Vertex> vertexList = new ArrayList<Vertex>();
-
-        for (int i = 0; i < adjacencyGraph.getVertices().size(); i++) {
-
-            // adds first indexed element to the list
-            vertexList.add(adjacencyGraph.getVertices().get(i));
-            // adds the downstream neighbours to the list
-            vertexList.addAll(adjacencyGraph.getDownstreamNeighbors(
-                    adjacencyGraph.getVertices().get(i)));
-            List<Vertex> tempList = vertexList;
-
-            // if there are no downstream neighbours, no need to check the list
-            if (tempList.size() > 1) {
-                for (int j = 1; j < tempList.size(); j++) {
-                    // checks the elements of the vertexlist for it's downstream
-                    // neighbours
-                    List<Vertex> funList = adjacencyGraph
-                            .getDownstreamNeighbors(vertexList.get(j));
-                    for (int k = 0; k < funList.size(); k++) {
-                        // if vertexList doesn't already contain this element in
-                        // the temporary list, adds it, so as not to have
-                        // repeats
-                        if (!vertexList.contains(funList.get(k))) {
-                            vertexList.add(funList.get(k));
-                        }
-                    }
+        Queue<Vertex> vertexQueue = new LinkedList<Vertex>();
+        
+        //we first add the element beginning the search to the queue
+        
+        for (int i = 0; i < adjacencyGraph.getVertices().size(); i++){
+            vertexQueue.add(adjacencyGraph.getVertices().get(i));
+            vertexList.add(vertexQueue.peek());
+            
+            //while the queue has an element in it, it puts new items into vertexlist, then
+            //adds the downstream elements of the top element while removing that element from the
+            //queue
+            while (!vertexQueue.isEmpty()){
+                if (!vertexList.contains(vertexQueue.peek())) {
+                    vertexList.add(vertexQueue.peek());
                 }
+                vertexQueue.addAll(adjacencyGraph.getDownstreamNeighbors(vertexQueue.remove()));
+               
             }
-            vertexSet.add(vertexList);
-            vertexList.clear();
-            tempList.clear();
-
+            //places the values of vertexlist into the vertex set
+            List<Vertex> tempList3 = new ArrayList<Vertex>();
+            tempList3.addAll(vertexList);
+            vertexSet.add(tempList3);
+            vertexList.clear();    
         }
+        
         return vertexSet;
+        
+        
     }
 
     /**
@@ -65,26 +61,38 @@ public class Algorithms {
      * @param adjacencyGraph
      * @return Set<List<Vertex>>
      */
-
+    
     public static Set<List<Vertex>> DFS(Graph adjacencyGraph) {
-        Set<List<Vertex>> vertexSet = new HashSet<List<Vertex>>();
+        Set<List<Vertex>> vertexSet = new LinkedHashSet<List<Vertex>>();
         List<Vertex> vertexList = new ArrayList<Vertex>();
-
-        for (int i = 0; i < adjacencyGraph.getVertices().size(); i++) {
-
-            DFinner(i, vertexList, adjacencyGraph); // calls the DFinner
-                                                    // function
-
-            vertexSet.add(vertexList);
-            vertexList.clear();
-            for (int l = 0; l < visited.length; l++) { // resets the visited
-                                                       // boolean array
-                visited[l] = false;
+        ArrayList<Vertex> vertexQueue = new ArrayList<Vertex>();
+        
+        //we first add the element beginning the search to the queue
+        
+        for (int i = 0; i < adjacencyGraph.getVertices().size(); i++){
+            vertexQueue.add(adjacencyGraph.getVertices().get(i));
+            vertexList.add(vertexQueue.get(0));
+            
+            //while the queue has an element in it, it puts new items into vertexlist, then
+            //adds the downstream elements of the top element while removing that element from the
+            //queue
+            while (!vertexQueue.isEmpty()){
+                if (!vertexList.contains(vertexQueue.get(0))) {
+                    vertexList.add(vertexQueue.get(0));
+                }
+                vertexQueue.addAll(0, adjacencyGraph.getDownstreamNeighbors(vertexQueue.remove(0)));
+               
             }
-
+            //places the values of vertexlist into the vertex set
+            List<Vertex> tempList3 = new ArrayList<Vertex>();
+            tempList3.addAll(vertexList);
+            vertexSet.add(tempList3);
+            vertexList.clear();    
         }
+        
         return vertexSet;
-
+        
+        
     }
 
     /**
@@ -96,26 +104,6 @@ public class Algorithms {
      * @param adjacencyGraph
      * @return
      */
-    private static List<Vertex> DFinner(int i, List<Vertex> vertexList,
-            Graph adjacencyGraph) {
-
-        // tells us we've visited this particular element/index
-        visited[i] = true;
-
-        // adds the element to the vertexList
-        vertexList.add(adjacencyGraph.getVertices().get(i));
-
-        for (int j = 0; j < adjacencyGraph.getVertices().size(); j++) {
-
-            if (!adjacencyGraph
-                    .getDownstreamNeighbors(adjacencyGraph.getVertices().get(i))
-                    .isEmpty() && !visited[j])
-                DFinner(j, vertexList, adjacencyGraph);
-        }
-
-        return vertexList;
-
-    }
 
     /**
      * Generates the shortest distance between two vertices on an adjacency
@@ -159,7 +147,7 @@ public class Algorithms {
             }
 
             // sends that list to vertexlist
-            vertexList = tempList;
+            vertexList.addAll(tempList);
             // clears templist to prepare it for later usage
             tempList.clear();
 
@@ -193,7 +181,7 @@ public class Algorithms {
      */
     public static List<Vertex> commonUps(Graph G, Vertex a, Vertex b) {
 
-        /*List<Vertex> alist = new ArrayList<Vertex>();
+        List<Vertex> alist = new ArrayList<Vertex>();
         List<Vertex> blist = new ArrayList<Vertex>();
 
         alist.clear();
@@ -207,8 +195,9 @@ public class Algorithms {
 
         alist.retainAll(blist);
 
-        return alist;*/
-        
+        return alist;
+    }
+        /*
         List<Vertex> list = new ArrayList<Vertex>();
         List<Vertex> list1 = new ArrayList<Vertex>();
         List<Vertex> list2 = new ArrayList<Vertex>();
@@ -225,7 +214,7 @@ public class Algorithms {
         return list;
 
     }
-
+*/
     /**
      * Returns a list of shared downstream vertices of two vertices.
      * 
@@ -240,7 +229,7 @@ public class Algorithms {
      */
     public static List<Vertex> commonDowns(Graph G, Vertex a, Vertex b) {
 
-        /*List<Vertex> alist = new ArrayList<Vertex>();
+        List<Vertex> alist = new ArrayList<Vertex>();
         List<Vertex> blist = new ArrayList<Vertex>();
 
         alist = G.getDownstreamNeighbors(a);
@@ -248,9 +237,10 @@ public class Algorithms {
 
         alist.retainAll(blist);
 
-        return alist;*/
-        
-        List<Vertex> list = new ArrayList<Vertex>();
+        return alist;
+    }
+}
+        /*List<Vertex> list = new ArrayList<Vertex>();
         List<Vertex> list1 = new ArrayList<Vertex>();
         List<Vertex> list2 = new ArrayList<Vertex>();
 
@@ -266,3 +256,4 @@ public class Algorithms {
         return list;
     }
 }
+*/
